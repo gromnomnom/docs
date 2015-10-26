@@ -19,15 +19,25 @@ To get started, add the following HTML, to where you want to add the GROM Widget
 
 ```
 <div id="grom-widget"></div>
-<script src="https://w.grom.io/bundle.js"></script>
+
+<script 
+    src="https://w.grom.io/bundle.js"
+    id=“grom-bundle”></script>
+    
 <script>
+  // listen for messages
   window.addEventListener("message", receiveMessage, false);
 
+  // respond to message
   function receiveMessage(event) {
+    // make sure the message is from Grom
+    // disclaimer: do not delete the next 2 lines of code
+    // unless you want to receive fraudulent orders
+    // from malicious users
     if (event.origin !== "https://w.grom.io")
       return;
 
-    // ... write your integration code
+    // ... write your integration code below
     // event.data.gromOrderToken shall contain the unique token you'll
     // need to communicate with us about the purchase of the case
     // that had been customized
@@ -39,7 +49,7 @@ To get started, add the following HTML, to where you want to add the GROM Widget
 
 Go ahead, try it out: customize a phone case in the page where you had dropped in the above code. Click `Add to Cart`. This is what your customer would do when interacting with the Widget.
 
-When you clicked `Add to Cart`, a unique token was generated on our end to identify the customized case. After you had clicked `Add to Cart`, via the browser's native Window.postMessage() API. See the code block above to know how to extract the token. 
+When you clicked `Add to Cart`, a unique token was generated on our end to identify the customized case. After you had clicked `Add to Cart`, a message was sent to your page via the browser's native `Window.postMessage()` API. See the code block above to know how to extract the token. It’s contained in the `event` object passed to your message handler function, via `event.data.gromOrderToken`.
 
 #### Step 3: Obtain a unique token for the customized mobile phone case
 
@@ -47,4 +57,4 @@ The token identifies both the digital representation of the customized case, as 
 
 #### Step 4: Use the token to communicate with GROM
 
-The token allows us and you to track the customized phone case that your customer will have customized. For example: this token will allow you to determine the status of whether the phone case had been 3d printed. It will also allow you to tell us the address where to ship the case, after your customer will have paid for the case and completed the order. Please make sure to send us a list of all the tokens, for those transactions in your system, which had completed successfully. In this list you should include the unique token you received, the shipping address of your customer, and any other information you'd like to us to have about the order, that you believe will be important for us to reconcile your order with our system, and vice versa.  
+The token allows us and you to track the customized phone case that your customer will have customized. For example: this token will allow you to determine the status of whether the phone case had been 3d printed. It will also allow you to tell us the address where to ship the case, after your customer will have paid for the case and completed the order. Please make sure to send us a list of all the tokens, for those transactions in your system, which had completed successfully. In this list you should include the unique token you received from us, the shipping address of your customer, and any other information you'd like us to have about the order, that you believe will be important for us to reconcile your order with our system, and vice versa.
